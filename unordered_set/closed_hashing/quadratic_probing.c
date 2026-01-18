@@ -1,11 +1,12 @@
 /**
  * CLOSED HASHING
  * simple implementation of 
- * LINEAR PROBING
- * (causes primary clustering)
+ * quadratic probing
+ * (causes secondary clustering)
  */
 #include<stdlib.h>
 #include<assert.h>
+#include<stddef.h>
 
 #define INITIAL_TABLE_SIZE 256
 #define LOAD_FACTOR 0.75
@@ -139,7 +140,6 @@ void erase(Table* t, int num) {
     while(states[idx]!=EMPTY) {
         if(states[idx] == PRESENT && keys[idx] == num) {
             states[idx]=DELETED;
-            t->size--;
             return;
         }
 

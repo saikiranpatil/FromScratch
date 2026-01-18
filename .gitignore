@@ -1,0 +1,48 @@
+# Compiled Object files
+*.o
+*.obj
+
+# Executables and Libraries
+*.exe
+*.out
+*.app
+*.dll
+*.lib
+*.a
+*.so
+
+# Debugging and symbol files
+*.dSYM/
+*.su
+*.pdb
+
+# Build Directories
+/build/
+/bin/
+/dist/
+/temp/
+/tmp/
+
+# IDE and Editor specific files
+# Visual Studio
+.vs/
+*.VC.db
+*.VC.opendb
+*.sdf
+*.tlog
+ipch/
+[Bb]in/
+[Oo]bj/
+# VS Code
+.vscode/
+# Eclipse
+.eclipse/
+.project
+.cproject
+.settings/
+# JetBrains IDEs (CLion, etc.)
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
