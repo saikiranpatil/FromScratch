@@ -60,8 +60,8 @@ void rehash(Table** tp) {
         insert(&new_table, t->keys[idx]);
     }
 
-    *tp=new_table;
     erase_table(t);
+    *tp=new_table;
 }
 
 void insert(Table** tp, int num) {
@@ -74,27 +74,31 @@ void insert(Table** tp, int num) {
 
     size_t delete_idx = (size_t)-1;
     size_t hash_value;
+    bool found_duplicate = false;
 
     for(size_t idx=0;idx<t->capacity;idx++) {
         hash_value = hash(t->capacity, num, idx);
         STATE curr_state = t->states[hash_value];
 
         if(PRESENT==curr_state) {
-            if(num==t->keys[hash_value]) return;
+            if(num==t->keys[hash_value]) {
+                found_duplicate = true;
+                break;
+            }
         } else if(DELETED==curr_state) {
             if(delete_idx == (size_t) -1) delete_idx = hash_value;
         } else {
-            if(delete_idx != (size_t) -1) hash_value=delete_idx;
-
-            t->size++;
-            t->keys[hash_value]=num;
-            t->states[hash_value]=PRESENT;
-            
-            return;
+            break;
         }
     }
 
-    assert(0 && "Hash Table Full");
+    if(found_duplicate) return;
+
+    if(delete_idx != (size_t) -1) hash_value = delete_idx;
+    
+    t->size++;
+    t->keys[hash_value]=num;
+    t->states[hash_value]=PRESENT;
 }
 
 bool search(Table* t, int num) {

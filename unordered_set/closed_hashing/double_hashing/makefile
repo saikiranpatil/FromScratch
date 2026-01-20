@@ -1,19 +1,33 @@
+# Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11 -Iinclude -g
-SRC = src/main.c src/utils.c src/double_hashing.c
-OBJ = $(SRC:.c=.o)
-TARGET = hash_test
+CFLAGS = -Wall -g -Isrc
 
+# Source files
+SRCS = $(wildcard src/*.c)
+LIB_SRCS = $(filter-out src/main.c, $(SRCS))  # all src files except main.c
+TEST_SRCS = $(wildcard test/*.c)
+
+# Targets
+TARGET = main
+TEST_TARGET = run_tests
+
+# Default target
 all: $(TARGET)
 
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)
+# Build main program
+$(TARGET): $(SRCS)
+	$(CC) $(CFLAGS) -o $@ $^
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+# Build test program (exclude main.c)
+$(TEST_TARGET): $(LIB_SRCS) $(TEST_SRCS)
+	$(CC) $(CFLAGS) -o $@ $^
 
-run: $(TARGET)
-	./$(TARGET)
-
+# Clean
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(TARGET) $(TEST_TARGET)
+
+# Run tests
+test: $(TEST_TARGET)
+	./$(TEST_TARGET)
+
+.PHONY: all clean test
