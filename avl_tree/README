@@ -1,0 +1,13 @@
+# AVL Tree Implementation
+
+A simple C implementation of a self-balancing binary search tree (AVL tree).
+
+## Overview
+
+This project implements an AVL tree data structure that automatically maintains balance through rotations. The tree ensures that the height difference between left and right subtrees is at most 1, providing logarithmic time complexity for insertion, deletion, and search operations.
+
+## Features
+
+- **Insert Operation**: Add elements to the tree with automatic balancing
+- **ASCII Tree Visualization**: Print the tree structure in a readable ASCII format
+- **Self-Balancing**: Maintains optimal tree balance through rotations

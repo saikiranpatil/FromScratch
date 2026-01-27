@@ -2,6 +2,7 @@
 #define DOUBLE_HASHING_H
 
 #include <stddef.h>
+#include <stdbool.h>
 
 typedef struct Table Table;
 Table* init_table();
