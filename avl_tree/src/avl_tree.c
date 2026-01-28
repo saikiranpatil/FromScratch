@@ -24,6 +24,26 @@ int getHeight(Tree* t) {
     return t ? t->height : 0;
 }
 
+Tree* leftRotation(Tree* x) {
+    Tree* y = x->right;
+    Tree* t2 = y->left;
+
+    x->right=t2;
+    y->left=x;
+
+    return y;
+}
+
+Tree* rightRotation(Tree* y) {
+    Tree* x = y->left;
+    Tree* t2 = x->right;
+
+    y->left = t2;
+    x->right = y;
+
+    return x;
+}
+
 Tree* insert(Tree* t, int data) {
     if(!t) return createNode(data);
 
@@ -33,11 +53,22 @@ Tree* insert(Tree* t, int data) {
 
     t->height=1+max(getHeight(t->left), getHeight(t->right));
 
-    int factor = getHeight(t->left) - getHeight(t->right);
+    int balanceFactor = getHeight(t->left) - getHeight(t->right);
 
-    // Left Right Rotation
-    if(factor>1 && data>t->data) {
-        Tree* 
+    if(balanceFactor>1 && data>t->left->data) {
+        // Left Right Rotation
+        t->left = rightRotation(t->left);
+        t = leftRotation(t);
+    } else if(balanceFactor<-1 && data<t->right->data) {
+        // Right Left Rotation
+        t->right = rightRotation(t->right);
+        t = leftRotation(t);
+    } else if(balanceFactor>1 && data<t->left->data) {
+        // Left Left Rotation
+        t = leftRotation(t);
+    } else if(balanceFactor<-1 && data>t->right->data) {
+        // Right Right Rotation
+        t = rightRotation(t);
     }
 
     return t;

@@ -1,0 +1,147 @@
+# Merge Sort Implementation
+
+A classical divide-and-conquer sorting algorithm implemented in C.
+
+## Overview
+
+Merge Sort is a stable, comparison-based sorting algorithm that divides the input array into smaller subarrays, sorts them recursively, and then merges them back together. This implementation provides guaranteed O(n log n) time complexity regardless of input distribution.
+
+## Algorithm Details
+
+### How It Works
+
+1. **Divide**: Split the array into two halves at the midpoint
+2. **Conquer**: Recursively sort both halves
+3. **Combine**: Merge the two sorted halves into a single sorted array
+
+### Key Characteristics
+
+- **Time Complexity**: O(n log n) - worst, average, and best case
+- **Space Complexity**: O(n) - requires temporary array for merging
+- **Stable Sort**: Maintains relative order of equal elements
+- **Divide & Conquer**: Uses recursive approach for efficiency
+
+## Implementation Details
+
+### Core Functions
+
+#### `mergeSort(int* nums, int l, int r, int* tmp)`
+Main recursive sorting function.
+- **Parameters:**
+  - `nums`: Pointer to array to sort
+  - `l`: Left boundary index (inclusive)
+  - `r`: Right boundary index (inclusive)
+  - `tmp`: Temporary array for merge operations
+
+#### `merge(int* nums, int l, int m, int r, int* tmp)`
+Merges two sorted subarrays `[l...m]` and `[m+1...r]`.
+- **Parameters:**
+  - `nums`: Array containing both subarrays
+  - `l`: Left boundary
+  - `m`: Middle boundary (dividing point)
+  - `r`: Right boundary
+  - `tmp`: Temporary array for storage during merge
+
+### Merge Process
+
+The merge function:
+1. Uses two pointers to track positions in each subarray
+2. Compares elements and places smaller element in temporary array
+3. Handles exhaustion of one subarray by copying remainder
+4. Copies merged result back to original array
+
+## Usage
+
+### Basic Example
+
+```c
+#include "merge_sort.h"
+#include <stdlib.h>
+
+int main() {
+    int nums[] = {5, 6, 78, 56, 8, 11, 1};
+    int n = sizeof(nums) / sizeof(int);
+    
+    // Allocate temporary buffer for merge operations
+    int* tmp = malloc(n * sizeof(int));
+    if (!tmp) return -1;
+    
+    // Sort the array
+    mergeSort(nums, 0, n-1, tmp);
+    
+    // Print sorted result
+    for (int i = 0; i < n; i++) 
+        printf("%d, ", nums[i]);
+    
+    free(tmp);
+    return 0;
+}
+```
+
+### Output
+```
+1, 5, 6, 8, 11, 56, 78,
+```
+
+## Building and Running
+
+### Compile
+```bash
+cd sorting/merge_sort
+make
+```
+
+### Run
+```bash
+./main
+```
+
+### Clean Build Artifacts
+```bash
+make clean
+```
+
+## Advantages
+
+✅ **Guaranteed Performance** - O(n log n) in all cases  
+✅ **Stable Sorting** - Preserves order of equal elements  
+✅ **Predictable** - No worst-case degradation  
+✅ **Parallelizable** - Divide-and-conquer nature enables parallel sorting  
+
+## Disadvantages
+
+❌ **Space Overhead** - Requires O(n) additional memory  
+❌ **Not In-Place** - Can't sort without extra buffer  
+❌ **Slower Constants** - Slightly slower than quicksort on average  
+❌ **Memory Allocation** - Requires malloc/free for temporary array  
+
+## Comparison with Other Sorts
+
+| Algorithm | Best | Average | Worst | Space | Stable |
+|-----------|------|---------|-------|-------|--------|
+| Merge Sort | O(n log n) | O(n log n) | O(n log n) | O(n) | ✓ |
+| Quick Sort | O(n log n) | O(n log n) | O(n²) | O(log n) | ✗ |
+| Heap Sort | O(n log n) | O(n log n) | O(n log n) | O(1) | ✗ |
+| Bubble Sort | O(n) | O(n²) | O(n²) | O(1) | ✓ |
+
+## Use Cases
+
+- **Large datasets**: When consistency is required
+- **External sorting**: Working with data larger than memory
+- **Stable sorting needed**: When preserving element order matters
+- **Linked lists**: Efficient for linked list sorting
+- **When worst-case matters**: Guaranteed performance needed
+
+## Related Implementations
+
+See also:
+- `sorting/bubble_sort/` - Simple O(n²) algorithm
+- `sorting/heap_sort/` - Another O(n log n) approach
+- `arrays/` - Basic array utilities
+
+## Notes
+
+- The temporary buffer `tmp` must be allocated before calling `mergeSort`
+- Ensure `l` and `r` are valid indices (0 to n-1)
+- For single elements or empty ranges (l >= r), function returns immediately
+- This is a classic implementation suitable for learning and reference
