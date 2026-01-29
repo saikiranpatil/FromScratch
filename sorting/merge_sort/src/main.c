@@ -4,7 +4,7 @@
 
 int main() {
     int nums[] = {5, 6, 78, 56, 8, 11, 1};
-    int n = sizeof(nums) / sizeof(int);
+    size_t n = sizeof(nums) / sizeof(int);
     
     int* tmp = malloc(n*sizeof(int));
     if(!tmp) return -1;
